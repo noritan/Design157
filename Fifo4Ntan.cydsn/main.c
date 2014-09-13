@@ -11,8 +11,10 @@
 */
 #include <project.h>
 
+// Software shift register
 uint8       v[8] = {0};
 
+// Show shift register contents and flags
 void show(void) {
     uint8       i;
     
@@ -33,8 +35,7 @@ void show(void) {
     }
 }
 
-int main()
-{
+int main(void) {
     uint8       x = 1;
     uint8       i;
     
@@ -42,12 +43,11 @@ int main()
     
     LCD_Start();
     
-    /* CyGlobalIntEnable; */ /* Uncomment this line to enable global interrupts. */
-    
     show();
     
     for(;;) {
         if (!SW2_Read()) {
+            // PUSH button
             CY_SET_REG8(Fifo_dp_u0__F0_REG, x++);
             show();
             while (!SW2_Read()) {
@@ -55,6 +55,7 @@ int main()
             }
         }
         if (!SW3_Read()) {
+            // PULL button
             for (i = 0; i < 7; i++) {
                 v[i] = v[i+1];
             }
