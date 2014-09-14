@@ -68,7 +68,7 @@ always @(posedge reset or posedge clock) begin
         ST_GET3:            state_reg <= ST_PUT3;
         ST_PUT3:            state_reg <= ST_LOAD;
         ST_LOAD:
-            if (f0_empty)   state_reg <= ST_STORE;
+            if (!f0_full)   state_reg <= ST_STORE;
         default:            state_reg <= ST_STORE;
     endcase
 end
